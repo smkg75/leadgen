@@ -156,6 +156,12 @@ last SIREN) or `per query` (one sweep a pass, feeding a matching index the compa
 recognised against). `stop` is what is written when the cascade is exhausted. `only if` is the
 condition a row must pass. `writes` is the shape of the value and what counts as proof.
 
+A block normally owns one column. It owns several when one gesture on one source yields them all
+and none has a cascade of its own: the seed writes the identity columns, a site scan writes its
+markers. Such a block is named after the gesture, lists every column it writes under `writes`
+with the shape of each, and a column that needs a cascade or a signal of its own keeps its own
+block and reads the gesture's proof file rather than fetching again.
+
 # Companies
 
 ## companies
