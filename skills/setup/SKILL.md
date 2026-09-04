@@ -53,7 +53,8 @@ Write each answer where it lands the moment it is given. A fact the user cannot 
 Done when the facts are written, not when the questions run out:
 
 - `context.md` carries the offer, the buyers, the attack gesture (call, email, both), the volume
-  aimed at, the paid cap per pass, the global exclusions;
+  aimed at, the paid cap per pass (0 unless the user raises it: `run` never pays, `enrich email`
+  still asks and pays on go), the global exclusions;
 - every `targets/<t>/index.md` carries the perimeter (activity codes with their counted noise,
   geography, size), the exclusions with the rule that applies them, the personas ranked (the chief
   executive first unless the user says otherwise), the signals that count with a window and a

@@ -119,10 +119,11 @@ tested    2026-08 — API and site, offers matched to a table
 
 ```
 gives     a verified professional email; a mobile number
-access    API with FULLENRICH_API_KEY, asynchronous: submit a batch, poll for the result · per company, one person or a batch
-limits    paid per contact found; the batch in flight is kept on disk with its id, so a crash never pays twice; mobile only at the moment of the call, for one named person
+access    API with FULLENRICH_API_KEY, asynchronous: POST https://app.fullenrich.com/api/v2/contact/enrich/bulk (up to 100 contacts), then GET https://app.fullenrich.com/api/v2/contact/enrich/bulk/<enrichment_id> until done (a webhook is offered instead of polling) · per company, one person or a batch
+          balance: GET https://app.fullenrich.com/api/v2/account/credits → {"balance": n}, read before every estimate
+limits    paid per contact found, nothing charged on a miss: 1 credit a professional email, 3 a personal email, 10 a mobile (help centre, read 2026-09-04); a credit is about 0.055 € on the public monthly plan, the host's connections.md records the rate actually paid; the batch in flight is kept on disk with its id, so a crash never pays twice; mobile only at the moment of the call, for one named person
 pitfalls  a mobile bought ahead of the call is a mobile paid for nothing
-tested    2026-08 — an email batch submitted and read back
+tested    2026-08 — an email batch submitted and read back; the balance endpoint never
 ```
 
 ## google-ads
@@ -168,9 +169,10 @@ tested    2026-08 — readings matched to a shortlist
 ## lemlist
 
 ```
-gives     two things on one account: a people database searched by title and seniority, free; an email finder, paid per address
-access    MCP on the session for the database, per company, by company name or domain, title and seniority from the persona; API with LEMLIST_API_KEY for the finder, per person, name and domain
-limits    the finder is paid: named selection and cap; the database search is free
+gives     two things on one account: a people database searched by title and seniority, free; an email and phone finder, paid per hit
+access    MCP on the session for the database, per company, by company name or domain, title and seniority from the persona; API with LEMLIST_API_KEY for the finder: POST https://api.lemlist.com/api/v2/enrichments/bulk (up to 500, enrichmentRequests find_email · verify · find_phone), then GET https://api.lemlist.com/api/enrich/<enrichId> · per person, name and domain
+          balance: GET https://api.lemlist.com/api/team/credits → {"credits": n, "details": {"remaining": …}}, read before every estimate
+limits    the finder is paid, nothing charged on a miss: 5 credits an email found and verified, 20 a phone (help centre, read 2026-09-04); a credit is about 0.01 $ on the public plans, the host's connections.md records the rate actually paid; the database search is free
 tested    never
 ```
 

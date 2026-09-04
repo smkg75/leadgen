@@ -25,7 +25,9 @@ Each step is its skill, with `$ARGUMENTS`, in this order:
 2. `skills/enrich/SKILL.md`
 3. `skills/signals/SKILL.md`
 4. `skills/verify/SKILL.md`
-5. `skills/enrich/SKILL.md` with `email <the rows verify did not flag>`, under the cap
+5. `skills/enrich/SKILL.md` with `email <the rows verify did not flag>`, under the cap of
+   `context.md`; the cap is 0 unless the host raised it, and at 0 this step is skipped and the
+   count of people it would have priced goes to the report
 6. `skills/push/SKILL.md` with the list of keys of the rows of verdict `ok`, score at or above the
    threshold, that verify did not flag
 

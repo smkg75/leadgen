@@ -56,12 +56,22 @@ Done when: every column in the plan has run or names its stop.
 
 ## Step 4 — Paid, on request only
 
-`email <selection>` or `mobile <person>`: the selection is named (a lot number, a score floor, a
-list of keys) and the cap of `context.md` holds. Say the count of rows and the cap before the
-first call. The script keeps the batch in flight on disk and pays once per person; `first` merge,
-so a second run buys nothing already bought.
+`email <selection>` or `mobile <person>` is the only way to pay, and nothing is bought before the
+user says go. The cap of `context.md` is 0 unless the user raised it: it bounds `run`, not this
+step, which asks instead.
 
-Done when: the count announced equals the count bought plus the count found empty, and the cost is
+1. Resolve the selection to people: a lot, a score floor, a list of keys, or a count ("the top
+   50" takes the eligible people by score). No selection given: ask how many people.
+2. Price it: people × the credits a hit costs at the first rank of the cascade (`sources.md`
+   § limits), in credits and in euros at the rate `connections.md` records for the provider; the
+   second rank runs on the misses only and is quoted as a ceiling. Read the remaining balance from
+   the provider when its API serves it; else say it is unknown.
+3. Print the estimate, people · credits · euros · balance before and after, and stop.
+4. On go: the script keeps the batch in flight on disk and pays once per person; `first` merge, so
+   a second run buys nothing already bought.
+
+Done when: the estimate was printed and answered before the first paid call; the count announced
+equals the count bought plus the count found empty; credits spent and the balance after are
 written in the pass line.
 
 ## Step 5 — A new column

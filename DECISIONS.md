@@ -62,6 +62,13 @@ for the rows `verify` did not flag. This reverses the skill it replaces, which f
 anything paid: there the selection was named by hand every time, here it is named once, at setup,
 and audited before the money goes.
 
+**The paid cap defaults to zero, and a paid request by hand is gated by an estimate** · 2026-09-04
+`run` applies the cap without asking, so the only safe default is that it never pays: the host
+raises the cap on purpose or `run` skips the paid step and reports the count. When the user asks
+for emails or mobiles by hand, the command resolves the people, prices them in credits and euros,
+reads the remaining balance when the provider serves it, prints the estimate and waits for go.
+What a person needs before paying per contact is the count, the price and what is left.
+
 **`verify` reports, never writes** · 2026-09-04
 An audit that lives inside what it audits audits nothing. `verify` returns findings with row,
 column, proof and a suggested decision, ranked by severity; the human decides, the session applies.

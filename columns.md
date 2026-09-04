@@ -83,8 +83,9 @@ block below and on the source blocks of its cascade. Every script:
 - `export` is what comes back from a write to a third party: `push`.
 
 `cost`: `free` · `quota` (a browser or a rate-limited endpoint, the rate measured in `sources.md`)
-· `paid` (per row; a named selection and a cap are mandatory, and only `run` may name the selection
-itself).
+· `paid` (per row; a named selection is mandatory; the cap of `context.md` defaults to 0, so `run`
+never pays unless the host raised it, and a paid request by hand is gated by an estimate, people ·
+credits · euros · balance, the user answers go to).
 
 `merge`, how the view reduces several facts to one value: `first` (the earliest proven value wins,
 later ones stay facts) · `latest` (the most recent reading wins) · `append` (every fact stays a
@@ -405,7 +406,7 @@ cascade   1 lemlist      per company   the finder by name and domain, the cheape
           2 fullenrich   per company   asynchronous, the batch in flight kept on disk
 stop      empty, dated witness, paid once
 merge     first · paid once per person, never bought twice
-only if   verdict ok AND the person is in the named selection AND the cap of the pass is not reached
+only if   verdict ok AND the person is in the named selection AND, under run, the cap of the pass is not reached, or, by hand, the user said go to the estimate
 writes    the verified address · proof = the provider, the batch id, the verification status
 ```
 
@@ -417,7 +418,7 @@ cost      paid
 cascade   1 fullenrich   per company   one person at a time
 stop      empty, dated witness
 merge     first
-only if   one person named, at the moment of the call
+only if   one person named, at the moment of the call, after go to the estimate
 writes    E.164 · proof = the provider and the batch id
 ```
 
