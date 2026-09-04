@@ -1,0 +1,16 @@
+{
+  "name": "leadgen",
+  "owner": {
+    "name": "smkg75"
+  },
+  "description": "The whole pass - setup if the host is fresh, then find, enrich, signals, verify, push. Always works with the public registry, gets significantly better with a CRM and the paid sources wired.",
+  "plugins": [
+    {
+      "name": "leadgen",
+      "source": "./",
+      "version": "0.1.0",
+      "description": "The whole pass - setup if the host is fresh, then find, enrich, signals, verify, push. Always works with the public registry, gets significantly better with a CRM and the paid sources wired.",
+      "license": "MIT"
+    }
+  ]
+}
