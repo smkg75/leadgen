@@ -81,6 +81,7 @@ notable exclusions, what broke — and one line in the target's page.
 ├── index.md                the map: the flow, one line per target, the link to connections
 ├── context.md              who sells what to whom, the attack gesture, the volume, the paid cap, the global exclusions
 ├── connections.md          one block per tool wired: access, variable name, quota, cap, tested on
+├── lib/                    optional: code shared by several targets, imported by the column scripts
 └── targets/<target>/
     ├── index.md            perimeter, exclusions, personas, signals, threshold, decisions, one line per pass
     ├── columns.md          optional: this target's own column blocks, shadowing the catalogue

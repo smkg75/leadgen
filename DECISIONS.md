@@ -141,3 +141,12 @@ seeing each other, if `verify` proves insufficient.
 **`tested` lines dated to a month.** Several source blocks were exercised in August 2026 on a table
 whose journal did not keep the day; the month is what is known. `crunchbase` carries the date of a
 browser reading where the validated draft said `never`.
+
+**`setup` takes no host path.** The host is the git root of the working directory. A repository that
+wants several hosts, one per business, has no way to say so: a `setup <path>` argument is the
+obvious shape, unwritten until a second such repository asks for it.
+
+**A target cannot shadow `sources.md`.** A source that exists for one target only (a public file
+of one trade's ministry, say) is described inline in the cascade of its block, like the file the
+user hands over to the seed; a `targets/<t>/sources.md` on the catalogue's shape would be the
+symmetric answer, unwritten until a target needs more than one such source.

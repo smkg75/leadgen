@@ -25,6 +25,7 @@ The host root is the git root of the working directory, else the working directo
 ├── context.md          the facts: who sells what to whom, the attack gesture, the volume aimed at, the paid cap, the global exclusions
 ├── connections.md      one block per tool wired: access, the name of the environment variable and whether it is set (never its value), quota, paid cap, tested on
 ├── .gitignore          targets/*/data/
+├── lib/                optional: code shared by several targets, imported by the column scripts; never a column itself
 └── targets/<target>/
     ├── index.md        perimeter, exclusions, personas, signals with window and weight, score threshold, data format, dated decisions, § Passes with one line per pass
     ├── columns.md      optional: blocks added or masked for this target, on the catalogue's shape
