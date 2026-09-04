@@ -119,9 +119,9 @@ tested    2026-08 — API and site, offers matched to a table
 
 ```
 gives     a verified professional email; a mobile number
-access    API with FULLENRICH_API_KEY, asynchronous: POST https://app.fullenrich.com/api/v2/contact/enrich/bulk (up to 100 contacts), then GET https://app.fullenrich.com/api/v2/contact/enrich/bulk/<enrichment_id> until done (a webhook is offered instead of polling) · per company, one person or a batch
+access    two doors on the same account, and a door is not a price: the session MCP and the API with FULLENRICH_API_KEY both reach the finder. What costs is the operation, never the channel. MCP: the connector of the session, no key posed, no account file to read. API, asynchronous: POST https://app.fullenrich.com/api/v2/contact/enrich/bulk (up to 100 contacts), then GET https://app.fullenrich.com/api/v2/contact/enrich/bulk/<enrichment_id> until done (a webhook is offered instead of polling) · per company, one person or a batch
           balance: GET https://app.fullenrich.com/api/v2/account/credits → {"balance": n}, read before every estimate
-limits    paid per contact found, nothing charged on a miss: 1 credit a professional email, 3 a personal email, 10 a mobile (help centre, read 2026-09-04); a credit is about 0.055 € on the public monthly plan, the host's connections.md records the rate actually paid; the batch in flight is kept on disk with its id, so a crash never pays twice; mobile only at the moment of the call, for one named person
+limits    paid whichever door it goes through, per contact found, nothing charged on a miss: 1 credit a professional email, 3 a personal email, 10 a mobile (help centre, read 2026-09-04); a credit is about 0.055 € on the public monthly plan, the host's connections.md records the rate actually paid; the batch in flight is kept on disk with its id, so a crash never pays twice; mobile only at the moment of the call, for one named person
 pitfalls  a mobile bought ahead of the call is a mobile paid for nothing
 tested    2026-08 — an email batch submitted and read back; the balance endpoint never
 ```
@@ -141,10 +141,15 @@ tested    2026-08-23 — a full table, the wall met and measured
 ## google-maps
 
 ```
-gives     whether an address is a business or a residence; the establishment record: phone, website, rating, review count, business status; the count of establishments found under a name
-access    Address Validation and Places (New) text search · GOOGLE_MAPS_API_KEY from a Google Cloud project with both APIs enabled and billing on · per query, a text search by trade and place, to seed rows; per company, the record behind an address; a field mask is mandatory and the bill depends on it
-limits    paid per call: named selection, capped
-tested    never
+gives     whether an address is a business or a residence; the establishment record: phone, website, rating, review count, business status, and the trade category it carries; the trade sign, which a register record never holds; the count of establishments found under a name
+access    two doors, and a door is not a price. Browser, free: https://www.google.com/maps/search/<name>+<address> lands on a single record when the name matches the address, and the record's site link carries the domain in its href · per company. API, paid: Address Validation and Places (New) text search · GOOGLE_MAPS_API_KEY from a Google Cloud project with both APIs enabled and billing on · per query, a text search by trade and place, to seed rows; per company, the record behind an address; a field mask is mandatory and the bill depends on it
+limits    the API is paid per call: named selection, capped. The browser is free and slow, about twenty seconds a record, a handful to a batch; a batch stops on its first failing action, so phrase the read so it always matches something (the site link, or the button offering to add one)
+pitfalls  the address is what kills homonymy, the name alone never does: search the two together or the record is a coin toss
+          the category on the record is the cheapest proof of trade there is, cheaper than fetching the site and reading it
+          no record at the address is a fact worth writing, not a failure: a third of a local trade has neither site nor record
+          the link the record shows is often not a site: an Instagram page, a Facebook page, a directory entry, a comparator. Read the host before writing it
+          the trade sign on the record is not the legal name, and is often the only name a searchable web knows the company by
+tested    2026-09 — the browser door, 114 companies searched by name + address: 73 domains, 41 records genuinely without a site
 ```
 
 ## hellowork
@@ -184,9 +189,9 @@ tested    2026-08 — readings matched to a shortlist
 
 ```
 gives     two things on one account: a people database searched by title and seniority, free; an email and phone finder, paid per hit
-access    MCP on the session for the database, per company, by company name or domain, title and seniority from the persona; API with LEMLIST_API_KEY for the finder: POST https://api.lemlist.com/api/v2/enrichments/bulk (up to 500, enrichmentRequests find_email · verify · find_phone), then GET https://api.lemlist.com/api/enrich/<enrichId> · per person, name and domain
+access    two doors on the same account, and a door is not a price: the session MCP and the API with LEMLIST_API_KEY both reach the database and the finder. What costs is the operation, never the channel. MCP: the database per company, by name or domain, title and seniority from the persona; the finder per person with enrich_lead and bulk_enrich_data, read back with bulk_get_enrichment_results. API: POST https://api.lemlist.com/api/v2/enrichments/bulk (up to 500, enrichmentRequests find_email · verify · find_phone), then GET https://api.lemlist.com/api/enrich/<enrichId> · per person, name and domain
           balance: GET https://api.lemlist.com/api/team/credits → {"credits": n, "details": {"remaining": …}}, read before every estimate
-limits    the finder is paid, nothing charged on a miss: 5 credits an email found and verified, 20 a phone (help centre, read 2026-09-04); a credit is about 0.01 $ on the public plans, the host's connections.md records the rate actually paid; the database search is free
+limits    the finder is paid whichever door it goes through, nothing charged on a miss: 5 credits an email found, 1 an email verified, 20 a phone, 1 a LinkedIn profile enriched (help centre, read 2026-09-04); a credit is 1 cent, the host's connections.md records the rate actually paid. Free: the database search and reading the account — free is what the operation is, not what the connector is
 tested    never
 ```
 
@@ -264,6 +269,7 @@ access    direct fetch · per company: the home page, then the first product-or-
 limits    three pages a company; a site behind a JavaScript challenge is unreadable to a plain client and is written as such
 pitfalls  the legal name is not the trade name: never reject a SIREN because the two differ
           the host is cited next to the publisher (a hosting provider, a site builder): retaining it hands the target the host's SIREN
+          a portal, a directory or a comparator of the trade speaks the trade better than any of its companies and belongs to none of them: the trade words on a page prove the subject, never the owner
           an exact homonym passes every text check (a short generic domain for a company of the same short name): the audit lists suspects by proof strength, SIREN on the page > strong key cited > domain root derived from the name
           the SIREN is cited as nine digits or as three groups of three
           B2B and B2C counters are read on the home page alone; the thresholds are calibrated on it

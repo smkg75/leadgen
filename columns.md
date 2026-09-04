@@ -195,10 +195,11 @@ writes    LJ · RJ · SAUVEGARDE · PLAN · CLOTURE · none, dated by the judgme
 ```
 type      attribute
 cost      free
-cascade   1 website         per company   candidates built from the name, the acronym, the brands in parentheses and the trade signs of the register record, on .fr .com .io .eu .net; kept when a legal page cites the SIREN or the page cites a strong key; next when no candidate is proven
-          2 search-engine   per query     the same proof on the first results outside directories; next when the pass cap is reached
+cascade   1 google-maps     per company   the establishment record searched by name + address, at the browser; the site the record shows, its category as proof of trade; next when no record at that address
+          2 website         per company   candidates built from the name, the acronym, the brands in parentheses and the trade signs of the register record, on .fr .com .io .eu .net; kept when a legal page cites the SIREN or the page cites a strong key; next when no candidate is proven
+          3 search-engine   per query     the same proof on the first results outside directories; next when the pass cap is reached
 stop      empty, dated witness written, so the next pass does not retry
-merge     first · a domain derived from the name alone is SUSPECT, settled before any signal runs
+merge     first · a domain derived from the name alone is SUSPECT, settled before any signal runs · a domain carried by several companies is theirs only when the officers connect them all into one group, read in the CRM's mandates: a network's domain belongs to none of its franchisees, and the count of carriers must be re-read at the end of the pass, never at its start
 only if   verdict is not excluded
 writes    the bare domain · proof = the page or the query that gave it, and its strength: SIREN on the page > strong key cited > name root alone
 ```
@@ -385,7 +386,7 @@ writes    the CRM's own id, dated by the push · proof = the record URL in the C
 type      seed
 cost      free, quota on rank 3
 cascade   1 company-registry   per company   the officers: a direction mandate is a contact, a board mandate is a lead, a corporate president is a subsidiary to climb (three levels at most), a sole trader is the person; next when no persona is matched
-          2 lemlist            per company   the people database by title and seniority, MCP, the search is free; next when the persona is still not matched
+          2 lemlist            per company   the people database by title and seniority; the search itself is free, whichever door it goes through; next when the persona is still not matched
           3 linkedin           per company   the People tab, browser, named selection only
 stop      the company keeps its officers; a dated witness for the persona search
 merge     append · dedup on name + siren · a cap per company, set in targets/<t>/index.md · personas ranked, the chief executive first by default
@@ -423,8 +424,9 @@ writes    the verified address · proof = the provider, the batch id, the verifi
 ```
 type      reveal
 cost      paid
-cascade   1 fullenrich   per company   one person at a time
-stop      empty, dated witness
+cascade   1 lemlist      per company   find_phone, the cheaper of the two; next when nothing returned
+          2 fullenrich   per company   the batch in flight kept on disk
+stop      empty, dated witness, paid once
 merge     first
 only if   one person named, at the moment of the call, after go to the estimate
 writes    E.164 · proof = the provider and the batch id
