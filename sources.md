@@ -155,6 +155,20 @@ access    the public search pages, server-rendered · per query, the queries of 
 tested    never
 ```
 
+## hiring-cafe
+
+```
+gives     job postings gathered from many boards and careers pages, with the employer name, the title, the location and the posting date; one row per posting
+access    the site's search, hiring.cafe, by role with date and location filters, in the browser · per query, never per company · the employer name is the only key: matched on name, then confirmed by the SIREN read on the employer's own site, the aggregator gives no identifier; no keyless endpoint recorded yet, the first script to use one writes it here
+          mirrors the job-boards/hiring-cafe.md file of the jobhunt plugin, which reads the same site for postings
+limits    not measured; a query pass feeds a matching index, never a per-company witness
+pitfalls  the legal name is not the trade name: a publisher's postings carry the brand, the registry carries the company; confirm on the SIREN cited on the site, never reject on the name
+          a posting reveals the company, not the fit: judge the posting, not the employer, a good company whose posting says nothing useful comes back the day it opens a different role
+          the location and the date shown are the board's own enrichment, not the posting's: read them on the employer's page
+          the same posting can be listed twice the same day: dedup on employer + title + date
+tested    2026-09-01 — one pass by hand in the browser, a few thousand postings reduced to a few hundred independent companies of the target's size band, nearly all with a SIREN established by proof; no script
+```
+
 ## indeed
 
 ```
@@ -209,6 +223,17 @@ limits    a captcha stops the pass; a page with no payload marks the company for
 pitfalls  attribution takes two proofs, never a resemblance: the advertised link carries the domain, or the page name equals the domain root or the company name exactly; a prefix match attributed unrelated pages
           launch dates are read on the rendered ads, thirty a page by relevance: exact under about thirty active ads, the most recent known above
 tested    2026-08-23 — the browser route on a full table; the API route never
+```
+
+## pages-jaunes
+
+```
+gives     a phone number and a postal address for an establishment, from its public listing
+access    the public directory pages, per company, no key; matched on the trade name and the postcode, never on the legal name alone; the listing URL is the proof
+limits    a listing is an establishment, not a company: a company with several branches has several listings, and the number that answers is the branch's, not the head office's; terms not checked here, low volume, last fallback only
+pitfalls  a generic trade name matches the wrong listing: require the postcode to agree before keeping the number
+          the number shown is often a call-tracking number that stops working: date every reading, and treat one older than six months as stale rather than wrong
+tested    2026-08-29 — the last fallback for phone on a table where the registry and the site had given nothing
 ```
 
 ## rdap-dns

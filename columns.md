@@ -208,8 +208,9 @@ writes    the bare domain · proof = the page or the query that gave it, and its
 ```
 type      attribute
 cost      free
-cascade   1 website       per company   the contact and legal pages; next when none is found
-          2 google-maps   per company   the establishment record, when a key is set
+cascade   1 website        per company   the contact and legal pages; next when none is found
+          2 google-maps    per company   the establishment record, when a key is set; next when no key or nothing found
+          3 pages-jaunes   per company   the listing matched on trade name and postcode, last fallback
 stop      empty, dated witness
 merge     latest
 only if   domain is set
@@ -299,13 +300,14 @@ writes    the SIREN kept, on the other rows sharing the domain: the largest INSE
 
 ```
 type      signal
-cost      free, quota from rank 5
+cost      free, quota from rank 6
 cascade   1 ats-public       per company   the ATS found on the careers link of the site; next when the site names no ATS
           2 website          per company   the careers page, titles matched against the roles of the target, undated; next when there is no careers page
           3 france-travail   per query     the queries of the target, the employer matched by name
           4 hellowork        per query     same matching
-          5 wttj             per company   named selection only
-          6 indeed           per query     MCP, on a named shortlist only
+          5 hiring-cafe      per query     same matching, confirmed by the SIREN on the employer's site
+          6 wttj             per company   named selection only
+          7 indeed           per query     MCP, on a named shortlist only
 stop      witness on the per-company ranks only; a per-query rank writes nothing on a company it did not name
 merge     append · one line per offer, dated by the posting
 only if   verdict ok
