@@ -13,10 +13,11 @@ decides, the session applies. An audit that lives inside what it audits audits n
 ## Step 0 — Load
 
 Walk up from the working directory to `.leadgen/`. Absent — stop on "Run `/leadgen:setup` first".
-Read `targets/<t>/index.md` (windows, thresholds, the counters of the previous pass), `columns.md`
-and the shadow, and the latest-value view of both tables.
+Read `targets/<t>/index.md` (windows, thresholds, the counters of the previous pass, and its
+§ Verify when one exists: each line there is an extra family for this target, checked like the
+seven below), `columns.md` and the shadow, and the latest-value view of both tables.
 
-Done when: the view and the previous counters are in hand.
+Done when: the view, the previous counters and the target's own families are in hand.
 
 ## Step 1 — The families, in parallel
 

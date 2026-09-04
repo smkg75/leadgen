@@ -1,7 +1,7 @@
 {
   "name": "leadgen",
   "description": "The whole pass - setup if the host is fresh, then find, enrich, signals, verify, push. Always works with the public registry, gets significantly better with a CRM and the paid sources wired.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "smkg75",
     "url": "https://github.com/smkg75"
