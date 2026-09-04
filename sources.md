@@ -192,7 +192,11 @@ gives     two things on one account: a people database searched by title and sen
 access    two doors on the same account, and a door is not a price: the session MCP and the API with LEMLIST_API_KEY both reach the database and the finder. What costs is the operation, never the channel. MCP: the database per company, by name or domain, title and seniority from the persona; the finder per person with enrich_lead and bulk_enrich_data, read back with bulk_get_enrichment_results. API: POST https://api.lemlist.com/api/v2/enrichments/bulk (up to 500, enrichmentRequests find_email · verify · find_phone), then GET https://api.lemlist.com/api/enrich/<enrichId> · per person, name and domain
           balance: GET https://api.lemlist.com/api/team/credits → {"credits": n, "details": {"remaining": …}}, read before every estimate
 limits    the finder is paid whichever door it goes through, nothing charged on a miss: 5 credits an email found, 1 an email verified, 20 a phone, 1 a LinkedIn profile enriched (help centre, read 2026-09-04); a credit is 1 cent, the host's connections.md records the rate actually paid. Free: the database search and reading the account — free is what the operation is, not what the connector is
-tested    never
+pitfalls  the finder matches on the name when the domain does not pin it down, and returns a stranger of the same name on another domain: send a domain, and refuse any address whose host is not the domain sent or its own root under another TLD
+          an address host carried by several distinct companies is a supplier's, not theirs — the trade's software vendor, its portal, its franchise head office. The same rule as for domain, on the local part's right side
+          a returned phone object can carry notFound: false and no number at all: the batch message states how many rows returned no data, and it is what counts
+          an email found is not an email that can be mailed: read the verification status, and keep risky out of a first campaign
+tested    2026-09 — find_email + verify on 82 owners of micro-companies, each with a proven domain: 21 addresses returned, 11 of them a stranger's; find_phone on 7 of the survivors, the verified email in the input, returned nothing. Identifying the person better does not conjure a mobile the provider does not hold
 ```
 
 ## linkedin
