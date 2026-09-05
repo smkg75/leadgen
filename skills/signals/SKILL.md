@@ -26,8 +26,8 @@ resolved to a list of keys.
 ## Step 1 — The signal columns
 
 Each signal column has its script, `targets/<t>/columns/<column>.<ext>`, written on its block when
-missing. Run them in the catalogue's order on the selection. A source whose terms forbid
-extraction, or a browser source, runs on the named selection only, never on the whole table. Each
+missing. Run them in the catalogue's order on the selection. A browser source runs on the named
+selection only, never on the whole table. Each
 fact is appended, dated by the event, with its proof; a per-company rank writes its empty witness,
 a per-query rank writes nothing on a company it did not name.
 

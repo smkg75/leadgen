@@ -14,8 +14,7 @@ Rules that hold for every source:
   wall stands for hours whatever the wait.
 - **Paid last**, on a named selection, under the cap of `.leadgen/context.md`; an in-flight batch
   is kept on disk so nothing is bought twice.
-- **A source whose terms forbid extraction** runs on a named shortlist only, and the user accepts
-  the risk before the first pass, in `targets/<t>/index.md`.
+- **A browser source** runs on a named shortlist only, never on the whole table.
 - **A closed route is struck through and dated** in `.leadgen/connections.md`, otherwise the next
   pass retries it.
 - **Keys live in the environment**, never in the repo; a block names the variable, the host's
@@ -202,12 +201,42 @@ tested    2026-09 — find_email + verify on 82 owners of micro-companies, each 
 ## linkedin
 
 ```
-gives     the headcount and the People tab of a company page; the title and the current role of a person
-access    the browser on the user's own account, read only · per company, on a named selection
-limits    about 150 profiles and 60 company pages a day, 8 to 25 seconds between two, stop at the first captcha and resume the next day; the terms forbid it and a data vendor was sued over it: the user accepts the risk before the first pass
+gives     a person's profile URL, headline and city; the title and the current role; the headcount and the People tab of a company page
+access    the browser on the user's own account, read only · per person, the people search: /search/results/people/?keywords=<first last> · per company, on a named selection
+limits    about 150 profiles and 60 company pages a day, 8 to 25 seconds between two, stop at the first captcha and resume the next day
 pitfalls  a board mandate is confirmed as a contact only when the profile shows an operational role
-tested    2026-08 — company pages and profiles on a shortlist, quotas held
+tested    2026-09 — 18 people searched in one session on a shortlist, no captcha, no profile opened
 ```
+
+**The results page is the unit of work, not the profile.** One search per person returns, for every
+hit, the name, the headline, the city and the `/in/` URL — everything a match needs. Opening a
+profile costs a request against the day's quota and adds nothing when the headline already names
+the trade or the company. Reserve it for a hit whose headline is empty.
+
+The pass, per person:
+
+1. navigate to the people search on `"<first name> <last name>"`, exactly as the register spells it;
+2. read the results page and judge each hit on three things, in this order — **the company of the
+   row named in the headline** (decisive), **the trade** (decisive), **the city or its basin**
+   (suggestive only). A hit with none of the three is someone else, whatever the name;
+3. take the URL of the one hit that passes. Write the others off by name in the proof, so the next
+   pass does not buy them back.
+
+**A name with no hit is an answer**, and a cheap one: "Aucun résultat" on an exact French name is
+a dated empty witness worth writing.
+
+**What the search engines cannot replace** (measured 2026-09): DuckDuckGo and Bing **do not index
+`/in/` profiles** — zero results on a positive control, and Bing silently drops `site:` and the
+quotes, so its answer looks like a result and is not one. Google indexes them but walls the browser
+session after about fifteen rapid queries. A people-database connector (fullenrich, lemlist) is the
+free first rank, and it is complementary rather than redundant: its index has holes and it returns
+homonyms, so it misses people the search finds, and the search disproves candidates it returns.
+Run the connector first, the search on what it leaves.
+
+**Pitfall — a browser extension can break scripted DOM reads.** With another extension installed
+(lemlist's, here), executing JavaScript in the page fails intermittently with "Cannot access a
+chrome-extension:// URL of different extension". Read the page's text instead, then resolve the
+link by its label; both are extension-proof.
 
 ## media-funding
 
@@ -285,7 +314,7 @@ tested    2026-08 — the three-page scan, the legal-page SIREN, phone and marke
 ```
 gives     job offers with the organisation name, contract, remote policy and posting date
 access    the site's Algolia index, search-only keys served to every visitor in window.env of any public company page (ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY_CLIENT), set as WTTJ_ALGOLIA_APP and WTTJ_ALGOLIA_KEY, never in the repo; a Referer header of the site's domain is required by the key · per company, the index searched by organisation name, the name settles the match
-limits    the terms forbid extraction: named shortlist only, the risk accepted before the first pass; the site's pages sit behind a JavaScript challenge and are unreadable to a plain client
+limits    named shortlist only; the site's pages sit behind a JavaScript challenge and are unreadable to a plain client
 pitfalls  the key allows restricting searchable attributes only on a whole group of the same priority
 tested    2026-08 — offers matched to a shortlist
 ```

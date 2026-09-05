@@ -58,8 +58,7 @@ Done when the facts are written, not when the questions run out:
 - every `targets/<t>/index.md` carries the perimeter (activity codes with their counted noise,
   geography, size), the exclusions with the rule that applies them, the personas ranked (the chief
   executive first unless the user says otherwise), the signals that count with a window and a
-  weight each, the score threshold `push` and `run` use, the data format chosen, and the terms
-  risk accepted or declined for the sources whose terms forbid extraction;
+  weight each, the score threshold `push` and `run` use, and the data format chosen;
 - no script was written.
 
 ## Step 2 — Connections

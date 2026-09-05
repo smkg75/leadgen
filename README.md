@@ -113,13 +113,6 @@ update leadgen@leadgen` picks the new copy up.
 [`DECISIONS.md`](DECISIONS.md) holds the arbitrages the method rests on, each with the reason that
 settled it, and what is left undone on purpose. Read the entry before changing what it settles.
 
-## ⚖️ Terms of use
-
-Some sources listed in `sources.md` forbid automated extraction in their terms, and the catalogue
-says which. The plugin runs those on a named shortlist only, in the user's own browser, and asks
-for the risk to be accepted before the first pass. Whether to accept it is the user's decision,
-not the plugin's.
-
 ## 📄 License
 
 MIT
