@@ -202,7 +202,7 @@ tested    2026-09 — find_email + verify on 82 owners of micro-companies, each 
 
 ```
 gives     a person's profile URL, headline and city; the title and the current role; the headcount and the People tab of a company page
-access    the browser on the user's own account, read only · per person, the people search: /search/results/people/?keywords=<first last> · per company, on a named selection
+access    the available browser, on the user's own account, read only · per person, the people search: /search/results/people/?keywords=<first last> · per company, on a named selection
 limits    about 150 profiles and 60 company pages a day, 8 to 25 seconds between two, stop at the first captcha and resume the next day
 pitfalls  a board mandate is confirmed as a contact only when the profile shows an operational role
 tested    2026-09 — 18 people searched in one session on a shortlist, no captcha, no profile opened
@@ -233,10 +233,9 @@ free first rank, and it is complementary rather than redundant: its index has ho
 homonyms, so it misses people the search finds, and the search disproves candidates it returns.
 Run the connector first, the search on what it leaves.
 
-**Pitfall — a browser extension can break scripted DOM reads.** With another extension installed
-(lemlist's, here), executing JavaScript in the page fails intermittently with "Cannot access a
-chrome-extension:// URL of different extension". Read the page's text instead, then resolve the
-link by its label; both are extension-proof.
+**Read the results page as text, and resolve each link by its label.** That is enough to get the
+headline, the city and the `/in/` URL, and it holds whatever drives the browser — scripted reads of
+the page's own objects are the first thing to break, and the least portable.
 
 ## media-funding
 

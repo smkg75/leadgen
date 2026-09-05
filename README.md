@@ -38,7 +38,8 @@ for each target.
 
 The public French company register alone is enough to run: identity, officers, headcount bands,
 filed accounts, keyless. A CRM and the paid contact sources make it considerably better. Browser
-sources need Chrome running with the Claude in Chrome extension active.
+sources need a browser available to the session; which one is the host's business, not the
+plugin's.
 
 ## 🧾 Commands
 
