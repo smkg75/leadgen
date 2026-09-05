@@ -117,12 +117,19 @@ tested    2026-08 — API and site, offers matched to a table
 ## fullenrich
 
 ```
-gives     a verified professional email; a mobile number
+gives     a verified professional email; a mobile number; and, free, a person's LinkedIn profile with their title, company and city
 access    two doors on the same account, and a door is not a price: the session MCP and the API with FULLENRICH_API_KEY both reach the finder. What costs is the operation, never the channel. MCP: the connector of the session, no key posed, no account file to read. API, asynchronous: POST https://app.fullenrich.com/api/v2/contact/enrich/bulk (up to 100 contacts), then GET https://app.fullenrich.com/api/v2/contact/enrich/bulk/<enrichment_id> until done (a webhook is offered instead of polling) · per company, one person or a batch
           balance: GET https://app.fullenrich.com/api/v2/account/credits → {"balance": n}, read before every estimate
 limits    paid whichever door it goes through, per contact found, nothing charged on a miss: 1 credit a professional email, 3 a personal email, 10 a mobile (help centre, read 2026-09-04); a credit is about 0.055 € on the public monthly plan, the host's connections.md records the rate actually paid; the batch in flight is kept on disk with its id, so a crash never pays twice; mobile only at the moment of the call, for one named person
+search    the people search is free and answers two different questions. Asked a name, it says whether that person has a profile — the narrow door, and it fails whenever the profile carries a middle name or a trade suffix the register ignores. Asked a company name and a list of job titles, it walks the other way: from the trade back to the people, and it finds the owners no name lookup reaches. Run both, they overlap little
+          the count of a search is served with it while only ten rows come back, and no cursor is accepted on the way in: the only way to see all of a population is to cut it until every slice holds ten or fewer, then check the slices sum back to the count. Values inside one filter are OR'd, so a dozen owner titles ride in a single call
 pitfalls  a mobile bought ahead of the call is a mobile paid for nothing
+          filtering owners by job function empties the result on small firms — their current position rarely carries one. Filter on the title text instead
+          a place filter matches on substring, so a department name drags in every neighbour whose name contains it: re-read the place on each row returned
+          a title filter reads only the position shown as current, so an owner whose main listed job is elsewhere stays invisible, as does a school whose trade name says nothing of the trade
+          bulk export of a search is charged per contact, unlike the search itself
 tested    2026-08 — an email batch submitted and read back; the balance endpoint never
+          2026-09-05 — ~700 free people searches, 431 owners of driving schools across 80 departments, nothing charged
 ```
 
 ## google-ads
