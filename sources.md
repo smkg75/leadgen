@@ -126,7 +126,8 @@ search    the people search is free and answers two different questions. Asked a
 pitfalls  a mobile bought ahead of the call is a mobile paid for nothing
           filtering owners by job function empties the result on small firms — their current position rarely carries one. Filter on the title text instead
           a place filter matches on substring, so a department name drags in every neighbour whose name contains it: re-read the place on each row returned
-          a title filter reads only the position shown as current, so an owner whose main listed job is elsewhere stays invisible, as does a school whose trade name says nothing of the trade
+          a title filter reads only the position shown as current, so an owner whose main listed job is elsewhere stays invisible
+          match a company on single words, never on a phrase: a trade name says the trade its own way, and asking for the two words together loses the ones that say it in one or in a pun. Cast wide and judge the row
           bulk export of a search is charged per contact, unlike the search itself
 tested    2026-08 — an email batch submitted and read back; the balance endpoint never
           2026-09-05 — ~700 free people searches, 431 owners of driving schools across 80 departments, nothing charged
