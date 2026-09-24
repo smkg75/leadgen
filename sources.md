@@ -212,9 +212,9 @@ tested    2026-09 — find_email + verify on 82 owners of micro-companies, each 
 ```
 gives     a person's profile URL, headline and city; the title and the current role; the headcount and the People tab of a company page
 access    the available browser, on the user's own account, read only · per person, the people search: /search/results/people/?keywords=<first last> · per company, on a named selection
-limits    about 150 profiles and 60 company pages a day, 8 to 25 seconds between two, stop at the first captcha and resume the next day
-pitfalls  a board mandate is confirmed as a contact only when the profile shows an operational role
-tested    2026-09 — 18 people searched in one session on a shortlist, no captcha, no profile opened
+limits    about 150 profiles and 60 company pages a day, 8 to 25 seconds between two, stop at the first captcha and resume the next day · the quota and the detection count per account, not per tab: one agent at a time on the account, batches chained, never in parallel
+pitfalls  a board mandate is confirmed as a contact only when the profile shows an operational role · parallel runs trip "unusual search traffic" and suspend the account's search
+tested    2026-09 — 18 people searched in one session on a shortlist, no captcha, no profile opened · 2026-09 — 8 agents in parallel on one account, search suspended within minutes
 ```
 
 **The results page is the unit of work, not the profile.** One search per person returns, for every
