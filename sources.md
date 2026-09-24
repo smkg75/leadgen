@@ -58,7 +58,8 @@ tested    2026-08-23 — proceedings, accounts, officer changes and capital incr
 ```
 gives     the French company register: SIREN, head-office SIRET and address, legal name, acronym, trade name and trade signs, brands in parentheses in the full name, NAF code, legal form, creation date, administrative status, INSEE headcount band, revenue and net result when accounts are filed, the officers with their mandate, the count of establishments; no website
 access    https://recherche-entreprises.api.gouv.fr/search?q=… · keyless · per query with activite_principale=<naf>, code_postal or departement, etat_administratif=A, 25 a page; per company with q=<siren> for the full record
-limits    7 requests a second; resume at the last code or the last SIREN
+limits    7 requests a second per IP on paper, lowered at will by the State: 429s came at 1.3 a second shared by two sessions; one caller per IP at a time, 1 a second at most, honour Retry-After and double the wait on each new 429, stop for 12 hours when the API goes silent (an IP ban); resume at the last code or the last SIREN
+bulk      a known list of SIREN never loops on /search: the monthly SIRENE stock in Parquet on data.gouv (StockUniteLegale, StockEtablissement) read in place with DuckDB httpfs, `WHERE siren IN (…)`, answers a few hundred in a second with no limit; status, names, sole-trader name, headcount band, head office, NAF, no officers; the file URL changes each month, read it from the data.gouv API (/api/1/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/)
 pitfalls  the geographic filters match establishments, not the head office; when the boss is who gets called, filter on the head office
           an activity code is not a trade: count a code's rows before extracting it, and write the count next to the decision
           the legal name is not the trade name: never reject a SIREN because the two differ; the brands in parentheses and the trade signs are the best keys to find a domain
@@ -66,7 +67,7 @@ pitfalls  the geographic filters match establishments, not the head office; when
           a pass that skips every SIREN already seen never backfills a column added later: backfill is its own mode
           a sole trader (legal categories 1000 to 1999) has no mandate: the person named is the business, and reads as a contact
           a corporate president signals a subsidiary: climb to the parent, three levels at most, with a loop guard
-tested    2026-08 — search by activity code and postcode, per-SIREN records, officers, the parent climb
+tested    2026-08 — search by activity code and postcode, per-SIREN records, officers, the parent climb; 2026-09 — the 429s under 7 a second, the Parquet stock read with DuckDB
 ```
 
 ## crt-sh
