@@ -387,7 +387,8 @@ type      seed
 cost      free, quota on rank 3
 cascade   1 company-registry   per company   the officers: a direction mandate is a contact, a board mandate is a lead, a corporate president is a subsidiary to climb (three levels at most), a sole trader is the person; next when no persona is matched
           2 lemlist            per company   the people database by title and seniority; the search itself is free, whichever door it goes through; next when the persona is still not matched
-          3 linkedin           per company   the People tab, browser, named selection only
+          3 linkedin           per company   the People tab, browser, named selection only; next when the page is not found
+          4 sales-navigator    per company   the lead search filtered on current company, title and area, browser, named selection only
 stop      the company keeps its officers; a dated witness for the persona search
 merge     append · dedup on name + siren · a cap per company, set in targets/<t>/index.md · personas ranked, the chief executive first by default
 only if   verdict is not excluded, and a persona is defined for the target

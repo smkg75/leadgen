@@ -213,7 +213,7 @@ tested    2026-09 — find_email + verify on 82 owners of micro-companies, each 
 gives     a person's profile URL, headline and city; the title and the current role; the headcount and the People tab of a company page
 access    the available browser, on the user's own account, read only · per person, the people search: /search/results/people/?keywords=<first last> · per company, on a named selection
 limits    about 150 profiles and 60 company pages a day, 8 to 25 seconds between two, stop at the first captcha and resume the next day · the quota and the detection count per account, not per tab: one agent at a time on the account, batches chained, never in parallel
-pitfalls  a board mandate is confirmed as a contact only when the profile shows an operational role · parallel runs trip "unusual search traffic" and suspend the account's search · a free account also hits a monthly cap on people search; Premium lifts it, and Sales Navigator adds company, title and area filters that find an agency head in one query
+pitfalls  a board mandate is confirmed as a contact only when the profile shows an operational role · parallel runs trip "unusual search traffic" and suspend the account's search · a free account also hits a monthly cap on people search; Premium lifts it · filters by company, title and area are sales-navigator's, its own block
 tested    2026-09 — 18 people searched in one session on a shortlist, no captcha, no profile opened · 2026-09 — 8 agents in parallel on one account, search suspended within minutes
 ```
 
@@ -290,6 +290,21 @@ access    dig, the registry's RDAP (https://rdap.org/domain/<domain>), DNS over 
 pitfalls  a third-party whois lies: the registry's RDAP only
           a wildcard zone resolves anything: the probe does not conclude
 tested    never
+```
+
+## sales-navigator
+
+```
+gives     per person: name, current title and company, city or region, time in role and in company, connection degree, the About excerpt, recent post count, all on the results page; the full history and contact details only on the lead page
+access    the available browser, on the user's own account with a Sales Navigator seat, read only: no save, no list, no InMail, no connection request · lead search per query, https://www.linkedin.com/sales/search/people?query=(keywords:<terms, spaces as %20>) · account search for the company, on a named selection
+          filters in the panel: current company, headcount, function, current title, seniority, geography, industry, connections, changed jobs, posted on LinkedIn
+limits    the same account as linkedin, so the same quota and detection: one agent at a time on the account, never in parallel with a linkedin pass, 15 to 20 seconds between two searches, stop at the first captcha or "unusual traffic" warning and resume the next day; the page renders late, wait 2 to 3 seconds after loading before reading its text, an empty read is a page not yet drawn, not an empty result
+pitfalls  the keywords match the whole profile, past roles included: a brand word brings back former staff and the franchisor's head office, never the local agency by itself. Judge each row on current company + city, as in linkedin
+          a franchised agency or a small local company has no company page of its own: a search on its legal name or its trade sign returns nothing, and that nothing does not mean there is no boss
+          an officer the register does not publish is rarely findable from the agency name: get the name elsewhere first, then search it here to confirm and read the current role
+          the name search of a known person belongs to linkedin, which costs no seat; this block earns its place on the filters, from the company or the title back to the person
+          a zero on a keyword query is a dated empty witness for that query, not for the person
+tested    2026-09-24 — 8 lead searches by keywords in one session, 15 to 20 seconds apart, no captcha, no warning, no lead page opened; 2 agencies whose officer the register does not publish, searched by agency name, legal name, trade and town: no match; the filters listed, not exercised; account search never
 ```
 
 ## search-engine
